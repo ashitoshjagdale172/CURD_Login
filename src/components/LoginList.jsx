@@ -1,194 +1,61 @@
-import { Button, Card, Typography } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import React, { useState } from 'react'
 
-import { NavLink } from "react-router-dom";
-import Dashboard from "../Dashboard/dashboard";
+const LoginList = ({setFormData}) => {
 
-
-
-export function PatientListd() {
-    const TABLE_HEAD = ["Full Name", "Gender", "Email", "Contact Number", "Appointment Type", "Appointment Date", "Actions", "Appointment Status"];
-
-    const patient = useSelector(state => state.patient.patient)
+    const [users, setUsers] = useState([])
 
 
-    //   
+    const handleEdit = (index) => {
+        setFormData(users[index]);
+      };
 
-    useEffect(() => {
-        dispatch(getListAsynk())
-
-    }, [dispatch])
-
-    // Search patient 
-    const [searchTerm, setSearchTerm] = useState("");
-    const [filteredPatients, setFilteredPatients] = useState(patient);
-    useEffect(() => {
-        const results = patient.filter(item =>
-            (item.name?.toLowerCase() ?? "").includes(searchTerm.toLowerCase()) ||
-            (item.email?.toLowerCase() ?? "").includes(searchTerm.toLowerCase())
-        );
-        setFilteredPatients(results);
-    }, [searchTerm, patient]);
-    
-
-    // 
-
-    return (<>
-
-        <div className="mt-24 p-4">
-            <Dashboard count={patient.length} />
-            <div className="relative mb-5 flex justify-between  me-5">
-                <input
-                    type="text"
-                    placeholder="Search by name or email"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className=" p-2 pl-12 border border-blue-400  rounded-full"
-                />
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                    <img src="https://cdn-icons-png.freepik.com/512/861/861627.png" className="h-5 w-5" alt="search icon" />
-                </span>
-
-                <NavLink to='/pr'>
-                    <Button className="" size="sm" color="red">Add Patient</Button>
-                </NavLink>
-
-            </div>
-
-            <Card className="h-full w-full overflow-scroll rounded-none">
-                <table className="w-full min-w-max table-auto text-left ">
-                    <thead className="font-bold">
-                        <tr>
-                            {TABLE_HEAD.map((head) => (
-                                <th
-                                    key={head}
-                                    className="border-b border-blue-gray-100 bg-blue-gray-50 p-4"
-                                >
-                                    <Typography
-                                        variant="small"
-                                        color="blue-gray"
-                                        className="font-bold leading-none opacity-70"
-                                    >
-                                        {head}
-                                    </Typography>
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {filteredPatients.map((item, index) => {
-                            const isLast = index === patient.length - 1;
-                            const classes = isLast ? "p-4" : "p-4 border-b border-blue-gray-50";
-
-                            return (
-                                <tr key={name}>
-                                    {/* <td className={classes}>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-normal"
-                                        >
-                                            <div key={index}
-                                                className={`  cursor-pointer  ${zoomedIndex === index ? 'z-10' : ''}`}
-                                                onClick={() => handleClick(index)}>
-
-                                                <img src={item.profile} className={`max-h-10 rounded-full transition-transform duration-300 ${zoomedIndex === index ? 'scale-[4] ms-20' : 'scale-100'}`} alt="" />
-                                            </div>
-
-
-                                        </Typography>
-                                    </td> */}
-                                    <td className={classes}>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-bold"
-                                        >
-                                            {item.name}
-                                        </Typography>
-                                    </td>
-                                    <td className={classes}>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className=""
-                                        >
-                                            {item.gender}
-                                        </Typography>
-                                    </td>
-                                    <td className={classes}>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="text-purple-400"
-                                        >
-                                            {item.email}
-                                        </Typography>
-                                    </td>
-
-                                    <td className={classes}>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-normal"
-                                        >
-                                            {item.contact}
-                                        </Typography>
-                                    </td>
-
-                                    <td className={classes}>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-normal"
-                                        >
-                                            {item.type}
-                                        </Typography>
-                                    </td>
-
-                                    <td className={classes}>
-                                        <Typography
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-normal"
-                                        >
-                                            {item.date}
-                                        </Typography>
-                                    </td>
-                                    <td className={classes}>
-                                        <Typography
-                                            as="a"
-                                            href="#"
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="font-medium"
-                                        >
-                                            <div className="flex gap-2">
-                                                <ViewDialog id={item.id} profile={item.profile} DOB={item.DOB} age={item.age} gender={item.gender} contact={item.contact} name={item.name} address={item.address} blood_group={item.blood_group} email={item.email} appoitment={item.appoitment} />
-                                                <img src="https://cdn-icons-png.flaticon.com/512/6861/6861362.png" className="h-4" onClick={() => dispatch(deleteAsynk(item.id))} alt="" /><img src="" alt="" className="h-5" />
-                                            </div>
-                                        </Typography>
-                                    </td>
-
-                                    <td className={classes}>
-                                        <Typography
-                                            as="a"
-                                            href="#"
-                                            variant="small"
-                                            color="blue-gray"
-                                            className="text-green-800 font-bold"
-                                        >
-                                            {item.appoitment}
-                                        </Typography>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </Card>
-        </div>
-
-
-    </>)
+    const handleDelete = (index) => {
+        const updatedUsers = users.filter((_, i) => i !== index);
+        setUsers(updatedUsers);
+      };
+    return (
+        <div className="overflow-x-auto">
+      <table className="w-full table-auto border-collapse bg-white shadow-md rounded-lg">
+        <thead>
+          <tr className="bg-gray-200">
+            <th className="px-4 py-2 border">Name</th>
+            <th className="px-4 py-2 border">Email</th>
+            <th className="px-4 py-2 border">Mobile</th>
+            <th className="px-4 py-2 border">Gender</th>
+            <th className="px-4 py-2 border">DOB</th>
+            <th className="px-4 py-2 border">Address</th>
+            <th className="px-4 py-2 border">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user, index) => (
+            <tr key={index} className="text-center">
+              <td className="px-4 py-2 border">{user.name}</td>
+              <td className="px-4 py-2 border">{user.email}</td>
+              <td className="px-4 py-2 border">{user.mobile}</td>
+              <td className="px-4 py-2 border">{user.gender}</td>
+              <td className="px-4 py-2 border">{user.dob}</td>
+              <td className="px-4 py-2 border">{user.address}</td>
+              <td className="px-4 py-2 border space-x-2">
+                <button
+                  onClick={() => handleEdit(index)}
+                  className="px-2 py-1 text-white bg-green-500 rounded"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(index)}
+                  className="px-2 py-1 text-white bg-red-500 rounded"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    )
 }
+
+export default LoginList
