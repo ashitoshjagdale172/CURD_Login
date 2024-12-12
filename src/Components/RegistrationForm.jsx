@@ -44,9 +44,14 @@ const RegistrationForm = () => {
     if (!validate()) return;
 
     try {
+<<<<<<< HEAD
       // const response = await axios.post("https://api/register", formData);
       // alert("Registration successful: " + response.data.message);
       console.log(formData)
+=======
+      const response = await axios.post("https://api/users", formData);
+      alert("Registration successful: " + response.data.message);
+>>>>>>> 6df75bd8d6771804db6457210a88e2a5a09d39f7
     } catch (error) {
       console.error("Error during registration", error);
       alert("An error occurred. Please try again.");
