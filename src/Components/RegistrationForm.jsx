@@ -43,7 +43,7 @@ const RegistrationForm = () => {
     if (!validate()) return;
 
     try {
-      const response = await axios.post("https://api/register", formData);
+      const response = await axios.post("https://api/users", formData);
       alert("Registration successful: " + response.data.message);
     } catch (error) {
       console.error("Error during registration", error);
