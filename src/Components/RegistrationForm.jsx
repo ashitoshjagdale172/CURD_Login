@@ -1,5 +1,6 @@
 import  { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const RegistrationForm = () => {
   const [formData, setFormData] = useState({
@@ -43,8 +44,9 @@ const RegistrationForm = () => {
     if (!validate()) return;
 
     try {
-      const response = await axios.post("https://api/register", formData);
-      alert("Registration successful: " + response.data.message);
+      // const response = await axios.post("https://api/register", formData);
+      // alert("Registration successful: " + response.data.message);
+      console.log(formData)
     } catch (error) {
       console.error("Error during registration", error);
       alert("An error occurred. Please try again.");
@@ -186,7 +188,7 @@ const RegistrationForm = () => {
           type="submit"
           className="hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 w-full py-2 text-white bg-blue-500 rounded"
         >
-          Register
+         <Link to="/"> Register  </Link>
         </button>
       </form>
     </div>

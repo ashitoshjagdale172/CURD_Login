@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Typography, Button } from "@material-tailwind/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -29,11 +30,11 @@ function LoginPage() {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="prose prose-lg w-full max-w-md bg-white p-8 rounded shadow-md">
+      <div className="w-full max-w-md p-8 prose prose-lg bg-white rounded shadow-md">
         <Typography
           variant="h3"
           color="blue-gray"
-          className="text-center mb-6 font-bold"
+          className="mb-6 font-bold text-center"
         >
           Login
         </Typography>
@@ -77,7 +78,7 @@ function LoginPage() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-4 flex items-center justify-center w-8 h-8 text-gray-600"
+                className="right-4 absolute inset-y-0 flex items-center justify-center w-8 h-8 text-gray-600"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
@@ -108,9 +109,10 @@ function LoginPage() {
           Don't have an account?{" "}
           <a
             href="/register"
-            className="text-blue-500 font-semibold hover:underline"
-          >
+            className="hover:underline font-semibold text-blue-500"
+          ><Link to ="/Registration">
             Register
+            </Link>
           </a>
         </Typography>
       </div>
