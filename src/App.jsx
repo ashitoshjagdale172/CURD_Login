@@ -1,9 +1,10 @@
 import React from 'react'
+import RegistrationForm from './Component/RegistrationForm'
 
 const App = () => {
   return (
     <div>
-      login
+      <RegistrationForm/>
     </div>
   )
 }
